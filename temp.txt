@@ -1,0 +1,26 @@
+import openai
+
+# # Use the OpenAI API key to access the language model
+# openai.api_key = "your_openai_api_key"
+
+# def generate_positive_reply(text):
+#     # Define the prompt to generate a reply to a tweet
+#     prompt = (f"Write a positive reply to a tweet that says: '{text}'")
+    
+#     # Use the GPT-3 language model to generate a reply
+#     response = openai.Completion.create(
+#         engine="text-davinci-002",
+#         prompt=prompt,
+#         max_tokens=1024,
+#         n=1,
+#         stop=None,
+#         temperature=0.5,
+#     ).choices[0].text
+    
+#     # Return the generated reply
+#     return response
+
+# # Example usage
+# text = "I feel like quitting my job as a healthcare worker, I'm just so burnt out and stressed."
+# reply = generate_positive_reply(text)
+# print(reply)
