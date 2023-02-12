@@ -6,6 +6,12 @@ As we know that healthcare providers burnout is a serious issue that affects man
 ## What it does
 With Positive Pulse we try to help and keep the healthcare providers motivated and not depressed and burnout. It is a small step on our part to keep the force that keeps us healthy and feel appreciated. Positive Pulse on Twitter replies to tweets which sound depressing or burnout with a positive appreciative tweet in return.
 
+## Insights from visualization
+![Dashboard 1](images/tableau1.png)
+![Dashboard 2](images/tableau2.png)
+![Dashboard 3](images/tableau3.png)
+![Dashboard 4](images/tableau4.png)
+
 ## How we built it
 We used Python and Tableau to get data driven insights on burnout in healthcare industry. We used NLP tools, sentiment intensity analyzer and tf-idf vectorizer to classify the tweet as a burnout or non-burnout tweet. Then, we created visuals for the same using wordcloud to find the words occuring most in burnout tweets. 
 
