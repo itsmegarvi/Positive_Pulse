@@ -24,3 +24,66 @@ import openai
 # text = "I feel like quitting my job as a healthcare worker, I'm just so burnt out and stressed."
 # reply = generate_positive_reply(text)
 # print(reply)
+
+
+import pandas as pd
+import numpy as np
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+import warnings
+warnings.filterwarnings("ignore")
+
+# Load the Healthcare workers burnout tweets dataset
+df = pd.read_csv('healthcare_workers_burnout_tweets.csv')
+
+# Preprocess the tweets to remove punctuation, lowercase the text, remove stop words and stem the words
+def preprocess_tweets(tweets):
+    tweets = tweets.str.lower()
+    tweets = tweets.str.replace(r'[^\w\s]+', '')
+    stop = stopwords.words('english')
+    tweets = tweets.apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+    stemmer = SnowballStemmer('english')
+    tweets = tweets.apply(lambda x: ' '.join([stemmer.stem(word) for word in x.split()]))
+    return tweets
+
+# Preprocess the tweets in the dataset
+df['text'] = preprocess_tweets(df['text'])
+
+# Use TfidfVectorizer to transform the text data into numerical features
+vectorizer = TfidfVectorizer()
+text_features = vectorizer.fit_transform(df['text'])
+
+# Split the dataset into training and testing sets
+text_features_train, text_features_test, labels_train, labels_test = train_test_split(text_features, df['sentiment'], test_size=0.2, random_state=0)
+
+# Train a Logistic Regression classifier
+clf = LogisticRegression(random_state=0)
+clf.fit(text_features_train, labels_train)
+
+# Make predictions on the test data
+predictions = clf.predict(text_features_test)
+
+# Evaluate the performance of the classifier
+print("Accuracy:", accuracy_score(labels_test, predictions))
+print("Confusion Matrix:\n", confusion_matrix(labels_test, predictions))
+print("Classification Report:\n", classification_report(labels_test, predictions))
+
+# Train a Support Vector Machine classifier
+clf = SVC(kernel='linear', random_state=0)
+clf.fit(text_features_train, labels_train)
+
+# Make predictions on the test data
+predictions = clf.predict(text_features_test)
+
+# Evaluate the performance of the classifier
+print("Accuracy:", accuracy_score(labels_test, predictions))
+print("Confusion
