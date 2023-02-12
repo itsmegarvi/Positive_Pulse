@@ -608,7 +608,7 @@
       <column caption='Num Companies Worked' datatype='integer' name='[NumCompaniesWorked]' role='measure' type='quantitative' />
       <column datatype='string' hidden='true' name='[Over18]' role='dimension' type='nominal' />
       <column caption='Over Time' datatype='string' name='[OverTime]' role='dimension' type='nominal' />
-      <column caption='Percent Salary Hike' datatype='integer' name='[PercentSalaryHike]' role='measure' type='quantitative' />
+      <column aggregation='Sum' caption='Percent Salary Hike' datatype='integer' name='[PercentSalaryHike]' role='dimension' type='ordinal' />
       <column aggregation='Sum' caption='Performance Rating' datatype='integer' name='[PerformanceRating]' role='dimension' type='ordinal' />
       <column caption='Relationship Satisfaction' datatype='integer' name='[RelationshipSatisfaction]' role='measure' type='quantitative' />
       <column caption='Standard Hours' datatype='integer' hidden='true' name='[StandardHours]' role='measure' type='quantitative' />
@@ -649,6 +649,12 @@
       </column-instance>
       <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:17]' pivot='key' type='quantitative'>
         <table-calc ordering-field='[federated.0nrqk260w9v1oh1738gge0d6pwni].[JobSatisfaction]' ordering-type='Field' type='PctTotal' />
+      </column-instance>
+      <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:25]' pivot='key' type='quantitative'>
+        <table-calc ordering-type='Pane' type='PctTotal' />
+      </column-instance>
+      <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:29]' pivot='key' type='quantitative'>
+        <table-calc ordering-field='[federated.0nrqk260w9v1oh1738gge0d6pwni].[DistanceFromHome]' ordering-type='Field' type='PctTotal' />
       </column-instance>
       <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:5]' pivot='key' type='quantitative'>
         <table-calc ordering-type='Columns' type='PctTotal' />
@@ -701,6 +707,12 @@
             </map>
             <map to='#4e79a7'>
               <bucket>&quot;[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:17]&quot;</bucket>
+            </map>
+            <map to='#4e79a7'>
+              <bucket>&quot;[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:25]&quot;</bucket>
+            </map>
+            <map to='#4e79a7'>
+              <bucket>&quot;[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:29]&quot;</bucket>
             </map>
             <map to='#4e79a7'>
               <bucket>&quot;[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:5]&quot;</bucket>
@@ -847,6 +859,7 @@
           </datasources>
           <datasource-dependencies datasource='federated.0nrqk260w9v1oh1738gge0d6pwni'>
             <column datatype='string' name='[Attrition]' role='dimension' type='nominal' />
+            <column-instance column='[Attrition]' derivation='Count' name='[cnt:Attrition:qk]' pivot='key' type='quantitative' />
             <column-instance column='[Attrition]' derivation='None' name='[none:Attrition:nk]' pivot='key' type='nominal' />
             <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk]' pivot='key' type='quantitative'>
               <table-calc ordering-type='Rows' type='PctTotal' />
@@ -861,6 +874,16 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+              <text column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[cnt:Attrition:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk]</rows>
@@ -879,8 +902,8 @@
             <column aggregation='Sum' caption='Distance From Home' datatype='integer' name='[DistanceFromHome]' role='dimension' type='ordinal' />
             <column-instance column='[Attrition]' derivation='None' name='[none:Attrition:nk]' pivot='key' type='nominal' />
             <column-instance column='[DistanceFromHome]' derivation='None' name='[none:DistanceFromHome:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:8]' pivot='key' type='quantitative'>
-              <table-calc ordering-type='RowInPane' type='PctTotal' />
+            <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:16]' pivot='key' type='quantitative'>
+              <table-calc ordering-field='[federated.0nrqk260w9v1oh1738gge0d6pwni].[Attrition]' ordering-type='Field' type='PctTotal' />
             </column-instance>
           </datasource-dependencies>
           <filter class='categorical' column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]'>
@@ -898,10 +921,13 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
-        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
-        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:DistanceFromHome:ok] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk])</cols>
+        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:16]</rows>
+        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:DistanceFromHome:ok])</cols>
       </table>
       <simple-id uuid='{608CF71B-F988-4293-9B2E-E820465FCE56}' />
     </worksheet>
@@ -909,7 +935,7 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run>Lower job satisfaction has higher attrition rate</run>
+            <run>Job satisfaction vs Attrition</run>
           </formatted-text>
         </title>
       </layout-options>
@@ -923,8 +949,8 @@
             <column aggregation='Sum' caption='Job Satisfaction' datatype='integer' name='[JobSatisfaction]' role='dimension' type='ordinal' />
             <column-instance column='[Attrition]' derivation='None' name='[none:Attrition:nk]' pivot='key' type='nominal' />
             <column-instance column='[JobSatisfaction]' derivation='None' name='[none:JobSatisfaction:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:8]' pivot='key' type='quantitative'>
-              <table-calc ordering-type='RowInPane' type='PctTotal' />
+            <column-instance column='[Attrition]' derivation='Count' name='[pcto:cnt:Attrition:qk:16]' pivot='key' type='quantitative'>
+              <table-calc ordering-field='[federated.0nrqk260w9v1oh1738gge0d6pwni].[Attrition]' ordering-type='Field' type='PctTotal' />
             </column-instance>
           </datasource-dependencies>
           <aggregation value='true' />
@@ -937,12 +963,12 @@
             </view>
             <mark class='Automatic' />
             <encodings>
-              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobSatisfaction:ok]' />
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
             </encodings>
           </pane>
         </panes>
-        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
-        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobSatisfaction:ok] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk])</cols>
+        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:16]</rows>
+        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobSatisfaction:ok])</cols>
       </table>
       <simple-id uuid='{5C271D60-68D1-4275-9DB8-D74C696D42B5}' />
     </worksheet>
@@ -950,7 +976,7 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run>People with low work-life balance tend to have way more attrition</run>
+            <run>Work Life Balance vs Attrition</run>
           </formatted-text>
         </title>
       </layout-options>
@@ -982,6 +1008,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]</rows>
@@ -993,7 +1022,7 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run>Better job satisfaction = Less attrition rate</run>
+            <run>Job Satisfaction vs Attrition</run>
           </formatted-text>
         </title>
       </layout-options>
@@ -1090,6 +1119,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1098,6 +1130,13 @@
       <simple-id uuid='{3554593A-9A1F-4529-A312-820CEC8A0CF1}' />
     </worksheet>
     <worksheet name='Sheet 15'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Envitonment Satisfaction vs Attrition</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
           <datasources>
@@ -1125,33 +1164,25 @@
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Square' />
+            <mark class='Automatic' />
             <encodings>
-              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' />
-              <text column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' />
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
             </encodings>
-            <style>
-              <style-rule element='mark'>
-                <format attr='has-stroke' value='false' />
-                <format attr='mark-labels-show' value='true' />
-                <format attr='mark-labels-cull' value='true' />
-                <format attr='mark-labels-line-first' value='true' />
-                <format attr='mark-labels-line-last' value='true' />
-                <format attr='mark-labels-range-min' value='true' />
-                <format attr='mark-labels-range-max' value='true' />
-                <format attr='mark-labels-mode' value='all' />
-                <format attr='mark-labels-range-scope' value='pane' />
-                <format attr='mark-labels-range-field' value='' />
-              </style-rule>
-            </style>
           </pane>
         </panes>
-        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]</rows>
-        <cols>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:EnvironmentSatisfaction:ok]</cols>
+        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]</rows>
+        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:EnvironmentSatisfaction:ok])</cols>
       </table>
       <simple-id uuid='{E37D621E-3472-4A84-8045-9F984CDB4A57}' />
     </worksheet>
     <worksheet name='Sheet 16'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Job Involvement vs Attrition</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
           <datasources>
@@ -1179,33 +1210,67 @@
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Square' />
+            <mark class='Automatic' />
             <encodings>
-              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' />
-              <text column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' />
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
             </encodings>
-            <style>
-              <style-rule element='mark'>
-                <format attr='has-stroke' value='false' />
-                <format attr='mark-labels-show' value='true' />
-                <format attr='mark-labels-cull' value='true' />
-                <format attr='mark-labels-line-first' value='true' />
-                <format attr='mark-labels-line-last' value='true' />
-                <format attr='mark-labels-range-min' value='true' />
-                <format attr='mark-labels-range-max' value='true' />
-                <format attr='mark-labels-mode' value='all' />
-                <format attr='mark-labels-range-scope' value='pane' />
-                <format attr='mark-labels-range-field' value='' />
-              </style-rule>
-            </style>
           </pane>
         </panes>
-        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]</rows>
-        <cols>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobInvolvement:ok]</cols>
+        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]</rows>
+        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobInvolvement:ok])</cols>
       </table>
       <simple-id uuid='{55E07865-AFE8-467A-966E-311BCD45E01E}' />
     </worksheet>
+    <worksheet name='Sheet 17'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='watson_healthcare_modified' name='federated.0nrqk260w9v1oh1738gge0d6pwni' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0nrqk260w9v1oh1738gge0d6pwni'>
+            <column datatype='string' name='[Attrition]' role='dimension' type='nominal' />
+            <column aggregation='Sum' caption='Percent Salary Hike' datatype='integer' name='[PercentSalaryHike]' role='dimension' type='ordinal' />
+            <column-instance column='[Attrition]' derivation='Count' name='[cnt:Attrition:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Attrition]' derivation='None' name='[none:Attrition:nk]' pivot='key' type='nominal' />
+            <column-instance column='[PercentSalaryHike]' derivation='None' name='[none:PercentSalaryHike:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]'>
+            <groupfilter function='member' level='[none:Attrition:nk]' member='&quot;Yes&quot;' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <manual-sort column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' direction='ASC'>
+            <dictionary>
+              <bucket>&quot;No&quot;</bucket>
+              <bucket>&quot;Yes&quot;</bucket>
+              <bucket>%all%</bucket>
+            </dictionary>
+          </manual-sort>
+          <slices>
+            <column>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[cnt:Attrition:qk]</rows>
+        <cols>([federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk] / [federated.0nrqk260w9v1oh1738gge0d6pwni].[none:PercentSalaryHike:ok])</cols>
+      </table>
+      <simple-id uuid='{972FD6EB-9B41-41DD-88C7-49E046CF81FC}' />
+    </worksheet>
     <worksheet name='Sheet 2'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Gender attrition</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
           <datasources>
@@ -1233,6 +1298,16 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+              <text column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1271,6 +1346,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1327,6 +1405,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
             <style>
               <style-rule element='pane'>
                 <format attr='minwidth' value='-1' />
@@ -1378,6 +1459,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1416,6 +1500,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1454,6 +1541,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:8]</rows>
@@ -1490,6 +1580,9 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[cnt:Attrition:qk]</rows>
@@ -1511,17 +1604,29 @@
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
-        <style />
+        <style>
+          <style-rule element='mark'>
+            <encoding attr='size-bar' field='[federated.0nrqk260w9v1oh1738gge0d6pwni].[med:Age:qk]' field-type='quantitative' max-size='1' min-size='0.005' type='centersize' />
+          </style-rule>
+        </style>
         <panes>
-          <pane id='2' selection-relaxation-option='selection-relaxation-allow'>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
             <view>
               <breakdown value='auto' />
             </view>
-            <mark class='Automatic' />
+            <mark class='Shape' />
+            <encodings>
+              <color column='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='0.60000002384185791' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
         <rows>[federated.0nrqk260w9v1oh1738gge0d6pwni].[med:Age:qk]</rows>
-        <cols>[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]</cols>
+        <cols />
       </table>
       <simple-id uuid='{5E3B1689-CEEB-4CF5-9569-818E226CA013}' />
     </worksheet>
@@ -1531,10 +1636,10 @@
       <style />
       <size sizing-mode='automatic' />
       <zones>
-        <zone h='100000' id='4' type-v2='layout-basic' w='100000' x='0' y='0'>
-          <zone h='98120' id='7' param='horz' type-v2='layout-flow' w='99016' x='492' y='940'>
-            <zone h='98120' id='5' type-v2='layout-basic' w='89176' x='492' y='940'>
-              <zone h='49060' id='3' name='Sheet 12' w='44588' x='492' y='940'>
+        <zone h='100000' id='2' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98120' id='5' param='horz' type-v2='layout-flow' w='99016' x='492' y='940'>
+            <zone h='98120' id='3' type-v2='layout-basic' w='89176' x='492' y='940'>
+              <zone h='49060' id='1' name='Sheet 11' w='44588' x='492' y='940'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1542,7 +1647,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='49060' id='9' name='Sheet 13' w='44588' x='45080' y='940'>
+              <zone h='49060' id='7' name='Sheet 12' w='44588' x='45080' y='940'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1550,7 +1655,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='49060' id='10' name='Sheet 15' w='44588' x='492' y='50000'>
+              <zone h='49060' id='8' name='Sheet 15' w='44588' x='492' y='50000'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1558,7 +1663,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='49060' id='11' name='Sheet 16' w='44588' x='45080' y='50000'>
+              <zone h='49060' id='9' name='Sheet 16' w='44588' x='45080' y='50000'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1567,8 +1672,65 @@
                 </zone-style>
               </zone>
             </zone>
-            <zone fixed-size='160' h='98120' id='6' is-fixed='true' param='vert' type-v2='layout-flow' w='9840' x='89668' y='940'>
-              <zone h='8578' id='8' name='Sheet 12' pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' type-v2='color' w='9840' x='89668' y='940'>
+            <zone fixed-size='160' h='98120' id='4' is-fixed='true' param='vert' type-v2='layout-flow' w='9840' x='89668' y='940'>
+              <zone h='8461' id='6' name='Sheet 11' pane-specification-id='2' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type-v2='color' w='9840' x='89668' y='940'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='1250' minheight='1250' sizing-mode='vscroll' />
+          <zones />
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{07696927-4843-423E-BAE7-21A98FFA73DE}' />
+    </dashboard>
+    <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true' name='Dashboard 2'>
+      <style />
+      <size sizing-mode='automatic' />
+      <zones>
+        <zone h='100000' id='4' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98120' id='10' param='horz' type-v2='layout-flow' w='99016' x='492' y='940'>
+            <zone h='98120' id='8' type-v2='layout-basic' w='99016' x='492' y='940'>
+              <zone h='49060' id='3' name='Sheet 1' w='49508' x='492' y='940'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='49060' id='5' name='Sheet 2' w='49508' x='50000' y='940'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='49060' id='6' name='Sheet 3' w='49508' x='492' y='50000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+              <zone h='49060' id='11' name='Sheet 14' w='49508' x='50000' y='50000'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -1602,10 +1764,36 @@
           </zones>
         </devicelayout>
       </devicelayouts>
-      <simple-id uuid='{07696927-4843-423E-BAE7-21A98FFA73DE}' />
+      <simple-id uuid='{85ED5C54-0F2A-48AA-8929-CD9CC059E9E3}' />
+    </dashboard>
+    <dashboard name='Story 1' type='storyboard'>
+      <style />
+      <size sizing-mode='automatic' />
+      <zones>
+        <zone h='100000' id='2' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98120' id='1' param='vert' removable='false' type-v2='layout-flow' w='99016' x='492' y='940'>
+            <zone h='4935' id='3' type-v2='title' w='99016' x='492' y='940' />
+            <zone h='11868' id='4' is-fixed='true' paired-zone-id='5' removable='false' type-v2='flipboard-nav' w='99016' x='492' y='5875' />
+            <zone h='81317' id='5' paired-zone-id='4' removable='false' type-v2='flipboard' w='99016' x='492' y='17743'>
+              <flipboard active-id='1' nav-type='caption' show-nav-arrows='true'>
+                <story-points>
+                  <story-point caption='Different factors causing attrition' captured-sheet='Dashboard 1' id='1' />
+                </story-points>
+              </flipboard>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <simple-id uuid='{3E153251-8C56-473E-B0DF-26700C79239C}' />
     </dashboard>
   </dashboards>
-  <windows source-height='37'>
+  <windows saved-dpi-scale-factor='1.25' source-height='37'>
     <window class='worksheet' name='Sheet 1'>
       <cards>
         <edge name='left'>
@@ -1624,6 +1812,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1649,6 +1842,11 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
       <simple-id uuid='{932290EA-9EC5-4D67-B31B-F0C1DB05B6FA}' />
     </window>
@@ -1670,6 +1868,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1698,6 +1901,7 @@
         <edge name='right'>
           <strip size='160'>
             <card param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='filter' />
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1723,6 +1927,11 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
       <simple-id uuid='{525EB7A7-3F79-4DE4-AA92-18319B24AB19}' />
     </window>
@@ -1744,6 +1953,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1769,6 +1983,11 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
       <simple-id uuid='{1898ECF4-92B0-4A0C-8322-E0B90CEB7FAE}' />
     </window>
@@ -1790,6 +2009,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1815,6 +2039,11 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
+          </strip>
+        </edge>
       </cards>
       <simple-id uuid='{5B7FA304-43A7-4B3E-B51D-754F9FC7EE2C}' />
     </window>
@@ -1836,6 +2065,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1864,6 +2098,7 @@
         <edge name='right'>
           <strip size='160'>
             <card param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='filter' />
+            <card pane-specification-id='10' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1891,7 +2126,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
-            <card pane-specification-id='2' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:JobSatisfaction:ok]' type='color' />
+            <card pane-specification-id='2' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1900,7 +2135,7 @@
       </viewpoint>
       <simple-id uuid='{5F46B486-68E0-4314-BFD1-8B88CF3EB3D8}' />
     </window>
-    <window class='worksheet' maximized='true' name='Sheet 12'>
+    <window class='worksheet' name='Sheet 12'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1918,6 +2153,11 @@
           </strip>
           <strip size='2147483647'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -1951,7 +2191,7 @@
       </cards>
       <simple-id uuid='{3E5AAB23-CA48-4134-977A-BAA57559E972}' />
     </window>
-    <window class='worksheet' name='Sheet 15'>
+    <window class='worksheet' maximized='true' name='Sheet 15'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1973,7 +2213,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
-            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' type='color' />
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -2001,7 +2241,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
-            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[pcto:cnt:Attrition:qk:2]' type='color' />
+            <card pane-specification-id='0' param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -2009,13 +2249,72 @@
     </window>
     <window class='dashboard' name='Dashboard 1'>
       <viewpoints>
-        <viewpoint name='Sheet 12' />
-        <viewpoint name='Sheet 13' />
-        <viewpoint name='Sheet 15' />
-        <viewpoint name='Sheet 16' />
+        <viewpoint name='Sheet 11'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 12'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 15'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 16'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='4' />
+      <simple-id uuid='{AB10ECBF-CD50-42B5-ABB2-F4A9F20EEEF0}' />
+    </window>
+    <window class='dashboard' name='Story 1'>
+      <viewpoints />
+      <active id='4' />
+      <simple-id uuid='{A67CFB34-0FAE-4672-80DB-1957016F29F5}' />
+    </window>
+    <window class='dashboard' name='Dashboard 2'>
+      <viewpoints>
+        <viewpoint name='Sheet 1'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 14'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 2'>
+          <zoom type='entire-view' />
+        </viewpoint>
+        <viewpoint name='Sheet 3'>
+          <zoom type='entire-view' />
+        </viewpoint>
       </viewpoints>
       <active id='11' />
-      <simple-id uuid='{AB10ECBF-CD50-42B5-ABB2-F4A9F20EEEF0}' />
+      <simple-id uuid='{02621210-3FB9-4D60-BA8A-050DBEBEA61F}' />
+    </window>
+    <window class='worksheet' name='Sheet 17'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0nrqk260w9v1oh1738gge0d6pwni].[none:Attrition:nk]' type='filter' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{1270537F-70B0-4C45-9110-4CD1FBC749E4}' />
     </window>
   </windows>
 </workbook>
